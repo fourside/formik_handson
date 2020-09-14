@@ -10,7 +10,8 @@ label {
 }
 
 input[type="text"],
-input[type="email"] {
+input[type="email"],
+textarea {
   display: block;
   width: 400px;
   padding: 6px 12px;
@@ -22,7 +23,7 @@ input[type="email"] {
   border-radius: 4px;
 }
 
-.form-controll {
+.form-control {
   margin-bottom: 20px;
 }
 
