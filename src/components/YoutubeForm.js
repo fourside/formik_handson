@@ -16,8 +16,10 @@ const initialValues = {
   phoneNumbers: ["", ""],
   phNumbers: [""],
 };
-const onSubmit = (values) => {
+const onSubmit = (values, onSubmitProps) => {
   console.log("form data", values);
+  console.log("submit props", onSubmitProps);
+  onSubmitProps.setSubmitting(false);
 };
 const validationSchema = Yup.object({
   name: Yup.string().required("Required"),
@@ -73,7 +75,6 @@ export function YoutubeForm() {
               <label htmlFor="address">Address</label>
               <FastField name="address">
                 {(props) => {
-                  console.log("Field render");
                   const { field, from, meta } = props;
                   return (
                     <div>
@@ -112,7 +113,6 @@ export function YoutubeForm() {
                   const { push, remove, form } = props;
                   const { values } = form;
                   const { phNumbers } = values;
-                  console.log("form errors", form.errors);
                   return (
                     <div>
                       {phNumbers.map((phNumber, index) => (
@@ -158,7 +158,7 @@ export function YoutubeForm() {
             >
               Visit all
             </button>
-            <button type="submit">Submit</button>
+            <button type="submit" disabled={!formik.isValid || formik.isSubmitting}>Submit</button>
           </Form>
         );
       }}
