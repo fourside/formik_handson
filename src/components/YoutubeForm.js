@@ -28,7 +28,7 @@ const validationSchema = Yup.object({
 
 export function YoutubeForm() {
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
       <Form>
         <div className="form-control">
           <label htmlFor="name">Name</label>
@@ -101,6 +101,7 @@ export function YoutubeForm() {
                 const { push , remove , form } = props;
                 const { values } = form;
                 const { phNumbers } = values;
+                console.log("form errors", form.errors)
                 return <div>
                   {
                     phNumbers.map((phNumber, index) => (
