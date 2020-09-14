@@ -36,7 +36,12 @@ const validateComments = (value) => {
 
 export function YoutubeForm() {
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+      validateOnChange={false}
+    >
       <Form>
         <div className="form-control">
           <label htmlFor="name">Name</label>
@@ -47,11 +52,7 @@ export function YoutubeForm() {
         <div className="form-control">
           <label htmlFor="email">E-mail</label>
           <Field type="email" id="email" name="email" />
-          <ErrorMessage name="email">
-            {
-              (errorMsg) => <div className="error">{errorMsg}</div>
-            }
-          </ErrorMessage>
+          <ErrorMessage name="email">{(errorMsg) => <div className="error">{errorMsg}</div>}</ErrorMessage>
         </div>
 
         <div className="form-control">
@@ -69,16 +70,16 @@ export function YoutubeForm() {
         <div className="form-control">
           <label htmlFor="address">Address</label>
           <FastField name="address">
-            {
-              (props) => {
-                console.log("Field render")
-                const { field, from, meta} = props;
-                return <div>
+            {(props) => {
+              console.log("Field render");
+              const { field, from, meta } = props;
+              return (
+                <div>
                   <input id="address" type="text" {...field} />
                   {meta.touched && meta.error ? <div>{meta.error}</div> : null}
                 </div>
-              }
-            }
+              );
+            }}
           </FastField>
         </div>
 
@@ -105,27 +106,31 @@ export function YoutubeForm() {
         <div className="form-control">
           <label>List of phone numbeers</label>
           <FieldArray name="phNumbers">
-            {
-              (props) => {
-                const { push , remove , form } = props;
-                const { values } = form;
-                const { phNumbers } = values;
-                console.log("form errors", form.errors)
-                return <div>
-                  {
-                    phNumbers.map((phNumber, index) => (
-                      <div key={index}>
-                        <Field name={`phNumbers[${index}]`} />
-                        {
-                          index > 0 && <button type="button" onClick={() => remove(index)}> - </button>
-                        }
-                        <button type="button" onClick={() => push("")}> + </button>
-                      </div>
-                    ))
-                  }
+            {(props) => {
+              const { push, remove, form } = props;
+              const { values } = form;
+              const { phNumbers } = values;
+              console.log("form errors", form.errors);
+              return (
+                <div>
+                  {phNumbers.map((phNumber, index) => (
+                    <div key={index}>
+                      <Field name={`phNumbers[${index}]`} />
+                      {index > 0 && (
+                        <button type="button" onClick={() => remove(index)}>
+                          {" "}
+                          -{" "}
+                        </button>
+                      )}
+                      <button type="button" onClick={() => push("")}>
+                        {" "}
+                        +{" "}
+                      </button>
+                    </div>
+                  ))}
                 </div>
-              }
-            }
+              );
+            }}
           </FieldArray>
         </div>
 
