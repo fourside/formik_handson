@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray, FastField } from "formik";
 import * as Yup from "yup";
 import { TextError } from "./TextError";
@@ -16,10 +16,19 @@ const initialValues = {
   phoneNumbers: ["", ""],
   phNumbers: [""],
 };
-const onSubmit = (values, onSubmitProps) => {
-  console.log("form data", values);
-  console.log("submit props", onSubmitProps);
-  onSubmitProps.setSubmitting(false);
+
+const savedValues = {
+  name: "hoge",
+  email: "hoge@example.com",
+  channel: "hoge channel",
+  comments: "welcome to formik",
+  address: "221-1 hoge street",
+  social: {
+    facebook: "",
+    twitter: "",
+  },
+  phoneNumbers: ["", ""],
+  phNumbers: [""],
 };
 const validationSchema = Yup.object({
   name: Yup.string().required("Required"),
@@ -37,12 +46,23 @@ const validateComments = (value) => {
 };
 
 export function YoutubeForm() {
+  const [formValues, setFormValues] = useState(null);
+
+  const onSubmit = (values, onSubmitProps) => {
+    console.log("form data", values);
+    console.log("submit props", onSubmitProps);
+    onSubmitProps.setSubmitting(false);
+    onSubmitProps.resetForm();
+    setFormValues(initialValues);
+  };
+
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={formValues || initialValues}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
       validateOnChange={false}
+      enableReinitialize
     >
       {(formik) => {
         return (
@@ -158,6 +178,8 @@ export function YoutubeForm() {
             >
               Visit all
             </button>
+            <button type="button" onClick={() => setFormValues(savedValues)}>Load saved value</button>
+            <button type="reset">Reset</button>
             <button type="submit" disabled={!formik.isValid || formik.isSubmitting}>Submit</button>
           </Form>
         );
