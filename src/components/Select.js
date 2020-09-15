@@ -6,7 +6,7 @@ export function Select(props) {
   const { label, name, options, ...rest } = props;
   return (
     <div className="form-control">
-      <label htmlFor={name}>{name}</label>
+      <label htmlFor={name}>{label}</label>
       <Field id={name} name={name} {...rest} as="select">
         {options.map((option) => (
           <option key={option.value} value={option.value}>
